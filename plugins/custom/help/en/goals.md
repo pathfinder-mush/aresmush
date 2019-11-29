@@ -7,5 +7,4 @@ This command lets you record your character's goals. Goals are only visible to y
 
 `goals` - Show your own goals.
 `goals/set <goals>` - Sets your goals.
-
-Characters with the "view_bgs" permission can view goals using `goals <name>`.
+`goals <name>` - See the goals of another character. Staff only. 
