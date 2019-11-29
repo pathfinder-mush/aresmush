@@ -9,6 +9,8 @@ module AresMUSH
       end
       
       def handle
+        char = Character.find_one_by_name("Guest-1")
+        char.update(alias: "guest")
         client.emit_success "Done!"
       end
 
