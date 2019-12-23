@@ -23,7 +23,7 @@ module AresMUSH
             num = die[0].to_i
             sides = die[1].to_i
             result1 += num.times.collect { |d| rand(sides) + 1 }
-          elsif /^\d+$/.match(i)
+          elsif /^-*\d+$/.match(i)
             result2 += [i.to_i]
           else
             result3 += [i]
