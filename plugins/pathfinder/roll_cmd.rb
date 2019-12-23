@@ -6,7 +6,7 @@ module AresMUSH
       attr_accessor :roll
 
       def parse_args
-        self.roll = trim_arg(cmd.args)
+        self.roll = cmd.args.gsub(/\s+/, "")
       end
 
       def handle
@@ -15,18 +15,18 @@ module AresMUSH
 
         for i in items
           if /^[\d]+[d][\d]+$/.match(i)
-            die = i.split(/[d]/)
-            num = die[0]
-            sides = die[1]
-            result1 += self.num.times.collect { |d| rand(self.sides) + 1 }
+            self.die = i.split(/[d]/)
+            self.num = die[0]
+            self.sides = die[1]
+            self.result1 += self.num.times.collect { |d| rand(self.sides) + 1 }
           elsif /[0-9]+/.match(i)
-            result2 += i
+            self.result2 += i
           else
-            result3 += result3[i]
+            self.result3 += result3[i]
           end
         end
 
-        total = result1 + result2
+        self.total = result1 + result2
 
         if defined?(result3)
           client.emit_failure("I don't know how to roll #{result3}")
