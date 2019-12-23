@@ -13,25 +13,29 @@ module AresMUSH
 
         items = roll.gsub("-", "+-").split(/[\+]/)
 
+        result1 = Array.new
+        result2 = Array.new
+        result3 = Array.new
+
         for i in items
           if /^[\d]+[d][\d]+$/.match(i)
-            self.die = i.split(/[d]/)
-            self.num = die[0]
-            self.sides = die[1]
-            self.result1 += self.num.times.collect { |d| rand(self.sides) + 1 }
-          elsif /[0-9]+/.match(i)
-            self.result2 += i
+            die = i.split(/[d]/)
+            num = die[0].to_i
+            sides = die[1].to_i
+            result1 += num.times.collect { |d| rand(sides) + 1 }
+          elsif /^\d+$/.match(i)
+            result2 += [i.to_i]
           else
-            self.result3 += result3[i]
+            result3 += [i]
           end
         end
 
-        self.total = result1 + result2
+        total = result1.sum + result2.sum
 
         if defined?(result3)
           client.emit_failure("I don't know how to roll #{result3}")
         else
-          enactor_room.emit("#{enactor_name} rolls: #{roll}\nResult: #{total}")
+          enactor_room.emit("#{enactor_name} rolls: #{roll}\nDie Rolls: #{result1}\nTotal: #{total}")
         end
 
         client.emit_success("Done!")
