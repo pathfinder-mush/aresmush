@@ -33,8 +33,10 @@ module AresMUSH
         else
           enactor_room.emit("#{enactor_name} rolls: #{roll}\nResult: #{total}")
         end
+
         client.emit_success("Done!")
+
       end
     end
   end
-end 
+end
