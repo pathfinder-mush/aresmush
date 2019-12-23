@@ -14,7 +14,7 @@ module AresMUSH
         items = roll.gsub("-", "+-").split(/[\+]/)
 
         for i in items
-          if /[^[\d]+[d][\d]+$/.match(i)
+          if /^[\d]+[d][\d]+$/.match(i)
             die = i.split(/[d]/)
             num = die[0]
             sides = die[1]
