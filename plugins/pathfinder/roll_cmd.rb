@@ -32,11 +32,9 @@ module AresMUSH
 
         total = result1.sum + result2.sum
 
-        if defined?(result3)
-          client.emit_failure("I don't know how to roll #{result3}")
-        else
-          enactor_room.emit("#{enactor_name} rolls: #{roll}\nDie Rolls: #{result1}\nTotal: #{total}")
-        end
+
+        enactor_room.emit("#{enactor_name} rolls: #{roll}\nDie Rolls: #{result1}\nTotal: #{total}")
+
 
         client.emit_success("Done!")
 
