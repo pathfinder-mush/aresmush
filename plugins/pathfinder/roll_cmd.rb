@@ -35,3 +35,6 @@ module AresMUSH
         end
         client.emit_success("Done!")
       end
+    end
+  end
+end 
