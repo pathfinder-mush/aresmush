@@ -7,7 +7,7 @@ module AresMUSH
 
       def parse_args
         args = cmd.parse_args(ArgParser.arg1_equals_optional_arg2_slash_optional_arg3)
-        roll = args.arg1.gsub(/\s+/, "")
+        self.roll = args.arg1.gsub(/\s+/, "")
       end
 
       def handle
