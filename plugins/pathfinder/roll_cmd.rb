@@ -6,8 +6,8 @@ module AresMUSH
       attr_accessor :roll
 
       def parse_args
-        self.args = cmd.parse_args(ArgParser.arg1_equals_optional_arg2_slash_optional_arg3)
-        self.roll = args.arg1.gsub(/\s+/, "")
+        args = cmd.parse_args(ArgParser.arg1_equals_optional_arg2_slash_optional_arg3)
+        roll = args.arg1.gsub(/\s+/, "")
       end
 
       def handle
