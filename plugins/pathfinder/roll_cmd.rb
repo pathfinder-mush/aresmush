@@ -6,7 +6,7 @@ module AresMUSH
       attr_accessor :roll
 
       def parse_args
-        args = cmd.parse_args(ArgParser.arg1_equals_optional_arg2_slash_optional_arg3)
+        self.args = cmd.parse_args(ArgParser.arg1_equals_optional_arg2_slash_optional_arg3)
         self.roll = args.arg1.gsub(/\s+/, "")
       end
 
