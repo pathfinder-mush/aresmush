@@ -15,6 +15,8 @@ module AresMUSH
       def handle
 
         items = roll.gsub("-", "+-").split(/[\+]/)
+        target = args.arg2 
+        comment = args.arg3
 
         result1 = Array.new
         result2 = Array.new
@@ -49,7 +51,7 @@ module AresMUSH
             Login.emit_if_logged_in args.arg2, "To: #{enactor_name}, #{target}\n#{enactor_name} rolls: #{roll}\nDie Rolls: #{result1}\nTotal: #{total}"
           end
         else
-          enactor_room.emit("#{enactor_name} rolls: #{roll}\nDie Rolls: #{result1}\nTotal: #{total}")  
+          enactor_room.emit("#{enactor_name} rolls: #{roll}\nDie Rolls: #{result1}\nTotal: #{total}")
         end
         client.emit_success("Done!")
 
