@@ -126,9 +126,6 @@ module AresMUSH
        else
          client.emit_failure("I'm not sure how to roll that.")
        end
-    
-
-
-    end
+     end
   end
 end
