@@ -1,7 +1,9 @@
 module AresMUSH
   module Pathfinder
     class RollCmd
-      include CommandHandler Custom
+      include CommandHandler
+      include Custom
+      
       attr_accessor :roll, :roll_target, :roll_comment, :names
 
       def parse_args
