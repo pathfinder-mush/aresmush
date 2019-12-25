@@ -112,12 +112,12 @@ module AresMUSH
           end
           client.emit_success("Done!")
         elsif !roll.nil? & roll_target.nil? & !roll_comment.nil?
-          enactor_room.emit("#{enactor_name} rolls: #{roll}\nDie Rolls: #{dice_rolls}\nTotal: #{total}\nroll_comment: #{roll_comment}")
+          enactor_room.emit("#{enactor_name} rolls: #{roll}\nDie Rolls: #{dice_rolls}\nTotal: #{total}\nComment: #{roll_comment}")
           client.emit_success("Done!")
         elsif !roll.nil? & !roll_target.nil? & !roll_comment.nil?
-          client.emit("To: #{roll_target}\n#{enactor_name} rolls: #{roll}\nDie Rolls: #{dice_rolls}\nTotal: #{total}\nroll_comment: #{roll_comment}")
+          client.emit("To: #{roll_target}\n#{enactor_name} rolls: #{roll}\nDie Rolls: #{dice_rolls}\nTotal: #{total}\nComment: #{roll_comment}")
           for name in names
-            Login.emit_if_logged_in Character.find_one_by_name(name), "To: #{roll_target}\n#{enactor_name} rolls: #{roll}\nDie Rolls: #{dice_rolls}\nTotal: #{total}\nroll_comment: #{roll_comment}"
+            Login.emit_if_logged_in Character.find_one_by_name(name), "To: #{roll_target}\n#{enactor_name} rolls: #{roll}\nDie Rolls: #{dice_rolls}\nTotal: #{total}\nComment: #{roll_comment}"
           end
           client.emit_success("Done!")
         elsif !roll.nil? & roll_target.nil? & roll_comment.nil?
