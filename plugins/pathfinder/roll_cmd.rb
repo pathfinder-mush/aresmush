@@ -1,13 +1,30 @@
 module AresMUSH
   module Pathfinder
     class RollCmd
-      include CommandHandler, Custom
+      include CommandHandler
+
+      # First, we tell the code what variables we will need to reference
+      # throughout the command, as opposed to what we might need in an
+      # individual method. These are 'class variables.' To give them values,
+      # you use self.<variable> = <value>.
 
       attr_accessor :roll, :roll_target, :roll_comment, :names
 
+      # Now we tell it how to handle the arguments from the roll command. We are
+      # using a custom argument parser from our Custom module. This is in the
+      # 'custom' plugin (module) under custom_arg_parsers.rb, so we call it from
+      # the custom module using Custom.thing.
+
       def parse_args
-        args = cmd.parse_args(CustomArgParsers.arg1_equals_optional_arg2_slash_optional_arg3)
+        args = cmd.parse_args(Custom.arg1_equals_optional_arg2_slash_optional_arg3)
+
+        # Now we define the part of the argument that is the actual roll, and
+        # remove extra spaces so the code doesn't freak.
+
         self.roll = args.arg1.gsub(/\s+/, "")
+
+        # Since the other two arguments are optional, we check to see if they
+        # have anything in them, and stuff those into other class variables.
 
         if !args.arg2.nil?
           self.roll_target = args.arg2
@@ -88,10 +105,14 @@ module AresMUSH
             num = die[0].to_i
             sides = die[1].to_i
             dice_rolls += num.times.collect { |d| rand(1..sides) }
+
           # Not a die? Is it an integer? Those we can just save by themselves.
+
           elsif integer_regex.match(i)
             mods += [i.to_i]
+
           # If it's not an integer, and not a die, then it's a keyword. Easy.
+
           else
             stats += [i]
           end
@@ -99,12 +120,15 @@ module AresMUSH
 
         # Now we just add up the die rolls and the modifiers. We don't have a
         # way to look up stat keywords right now, so they'll just sit there by
-        # themselves.
+        # themselves. Locked away. Safely. For now.
 
         total = dice_rolls.sum + mods.sum
 
         # Now we tell the game what to do based on what kind of command was
-        # entered.
+        # entered. This is where it starts to look a little nasty, because we
+        # have to check to see if certain variables exist, and either send the
+        # results to a room or to a list of targets, and check whether a comment
+        # is included or not. Eventually we will use an erb template for this.
 
         if !roll.nil? & !roll_target.nil? & roll_comment.nil?
           client.emit("To: #{roll_target}\n#{enactor_name} rolls: #{roll}\nDie Rolls: #{dice_rolls}\nTotal: #{total}")
