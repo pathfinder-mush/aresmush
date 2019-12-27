@@ -1,11 +1,13 @@
 module AresMUSH
   module Pathfinder
-    class DiceRollTemplate < ErbTemplateRenderer
+    class DiceRollerTemplate < ErbTemplateRenderer
 
-      def initialize
+      attr_accessor :dice, :roll_target, :dice_rolls, :total, :comment
+
+      def initialize(dice, roll_target, dice_rolls, total, comment)
         super File.dirname(__FILE__) + "/roll.erb"
       end
-      
+
     end
   end
 end
