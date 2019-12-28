@@ -1,13 +1,14 @@
 <%= header %>
 %xhDice Roller%xn
+
 <% if !roll_target.nil? %>
-  <%= "To: #{roll_target}" %>
+<%="To: #{roll_target}" %>
 <% end %>
 <%= "#{enactor_name} rolls: #{roll}" %>
 <%= "Die Rolls: #{dice_rolls}" %>
-<%= "Total: #{total}" %>
+<%= "Total:" + %xh%xc"#{total}"%xn %>
 <% if !roll_comment.nil? %>
-  <%= divider %>
-  <%= "Comment: #{roll_comment}" %>
+<%= divider %>
+<%="Comment: #{roll_comment}" %>
 <% end %>
 <%= footer %>

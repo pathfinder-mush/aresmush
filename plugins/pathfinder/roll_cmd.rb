@@ -8,7 +8,7 @@ module AresMUSH
       # individual method. These are 'class variables.' To give them values,
       # you use self.<variable> = <value>.
 
-      attr_accessor :roll, :roll_target, :roll_comment, :names
+      attr_accessor :roll, :roll_target, :roll_comment, :names, :dice_rolls
 
       # Now we tell it how to handle the arguments from the roll command. We are
       # using a custom argument parser from our Custom module. This is in the
@@ -130,26 +130,19 @@ module AresMUSH
         # results to a room or to a list of targets, and check whether a comment
         # is included or not. Eventually we will use an erb template for this.
 
-        if !roll.nil? & !roll_target.nil? & roll_comment.nil?
-          client.emit("To: #{roll_target}\n#{enactor_name} rolls: #{roll}\nDie Rolls: #{dice_rolls}\nTotal: #{total}")
+        template = DiceRollerTemplate.new(roll, roll_target, dice_rolls, total, roll_comment, enactor_name)
+
+        if !roll_target.nil?
+          client.emit template.render
           for name in names
-            Login.emit_if_logged_in Character.find_one_by_name(name), "To: #{roll_target}\n#{enactor_name} rolls: #{roll}\nDie Rolls: #{dice_rolls}\nTotal: #{total}"
+            Login.emit_if_logged_in Character.find_one_by_name(name), template.render
           end
           client.emit_success("Done!")
-        elsif !roll.nil? & roll_target.nil? & !roll_comment.nil?
-          enactor_room.emit("#{enactor_name} rolls: #{roll}\nDie Rolls: #{dice_rolls}\nTotal: #{total}\nComment: #{roll_comment}")
+        elsif roll_target.nil? & !roll.nil?
+          enactor_room.emit template.render
           client.emit_success("Done!")
-        elsif !roll.nil? & !roll_target.nil? & !roll_comment.nil?
-          client.emit("To: #{roll_target}\n#{enactor_name} rolls: #{roll}\nDie Rolls: #{dice_rolls}\nTotal: #{total}\nComment: #{roll_comment}")
-          for name in names
-            Login.emit_if_logged_in Character.find_one_by_name(name), "To: #{roll_target}\n#{enactor_name} rolls: #{roll}\nDie Rolls: #{dice_rolls}\nTotal: #{total}\nComment: #{roll_comment}"
-          end
-          client.emit_success("Done!")
-        elsif !roll.nil? & roll_target.nil? & roll_comment.nil?
-          enactor_room.emit("#{enactor_name} rolls: #{roll}\nDie Rolls: #{dice_rolls}\nTotal: #{total}")
-          client.emit_success("Done!")
-        else
-          client.emit_failure("I'm not sure how to roll that.")
+        elsif roll.nil?
+          client.emit_failure("Nothing to roll!")
         end
       end
     end
