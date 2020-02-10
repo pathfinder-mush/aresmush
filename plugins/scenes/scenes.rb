@@ -80,7 +80,7 @@ module AresMUSH
           return SceneHomeCmd
         when "join"
           return SceneJoinCmd
-        when "location", "privacy", "summary", "title", "type", "icdate", "plot"
+        when "location", "privacy", "summary", "title", "type", "icdate", "plot", "limit"
           return SceneInfoCmd
         when "delete"
           return SceneDeleteCmd
@@ -153,6 +153,8 @@ module AresMUSH
         return ChangeSceneLocationHandler
       when "changeSceneStatus"
         return ChangeSceneStatusRequestHandler
+      when "collapseScenePoses"
+        return CollapseScenePosesRequestHandler
       when "createPlot"
         return CreatePlotRequestHandler
       when "createScene"
