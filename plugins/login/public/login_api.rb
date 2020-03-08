@@ -2,12 +2,9 @@ module AresMUSH
   module Login
 
     def self.terms_of_service
-      begin
-        tos_filename = "game/text/tos.txt"
-        tos_text = File.read(tos_filename, :encoding => "UTF-8")
-      rescue Exception => ex
-        Global.logger.warn "Can't read terms of service file: #{ex}"
-        tos_text = ""
+      tos_text = Global.config_reader.get_text('tos.txt')
+      if (!tos_text)
+        Global.logger.warn "Can't read terms of service file."
       end
       return tos_text.blank? ? nil : tos_text
     end
@@ -116,6 +113,25 @@ module AresMUSH
       notices.each do |n|
         n.update(is_unread: false)
       end
+    end
+    
+    def self.boot_char(bootee, boot_message)
+      status = Website.activity_status(bootee)
+      if (status == 'offline')
+        return t('login.cant_boot_disconnected_player')
+      end
+      
+      # Boot from game
+      boot_client = Login.find_client(bootee)
+      if (boot_client)
+        boot_client.emit_failure boot_message
+        boot_client.disconnect
+      end
+      
+      # Boot from portal
+      bootee.update(login_api_token: nil)
+      
+      return nil
     end
   end
 end

@@ -6,7 +6,8 @@ module AresMUSH
         Global.logger.error "Tried to send message to non-existent channel #{channel_name}."
         return
       end
-      Channels.emit_to_channel channel, message  
+      Channels.emit_to_channel channel, message
+      Channels.notify_discord_webhook(channel, message, Game.master.system_character)
     end
     
     def self.ooc_lounge_channel
@@ -23,7 +24,7 @@ module AresMUSH
         return false
       end
       options = Channels.get_channel_options(enactor, channel)
-      Channels.emit_to_channel channel, message, options.title
+      Channels.pose_to_channel channel, enactor, message, options.title
       return true
     end
     
