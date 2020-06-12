@@ -9,7 +9,7 @@ module AresMUSH
       end
 
       def handle
-        client.emit_success "Done!"
+        client.emit_success "This is a test just to make sure that fiddle really truly works."
       end
 
     end
