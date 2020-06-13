@@ -9,7 +9,10 @@ module AresMUSH
       end
 
       def handle
-        client.emit_success "This is a test just to make sure that fiddle really truly works."
+        client.emit "Hello, #{enactor.name}! I see you're fiddling with fiddle."
+        client.emit_ooc "This is an OOC emit."
+        client.emit_success "This is a success message."
+        client.emit_failure "This is a failure message."
       end
 
     end
