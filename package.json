@@ -1,0 +1,24 @@
+{
+  "name": "aresmush",
+  "version": "1.0.0",
+  "description": "![Build Status](https://travis-ci.org/AresMUSH/aresmush.svg?branch=master)",
+  "main": "index.js",
+  "dependencies": {
+    "bufferutil": "^4.0.1",
+    "utf-8-validate": "^5.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pathfinder-mush/aresmush.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pathfinder-mush/aresmush/issues"
+  },
+  "homepage": "https://github.com/pathfinder-mush/aresmush#readme"
+}
