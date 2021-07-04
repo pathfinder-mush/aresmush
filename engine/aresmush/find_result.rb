@@ -1,6 +1,6 @@
 module AresMUSH
   class FindResult
-    attr_accessor :target, :error
+    attr_accessor :found, :target, :error
     def initialize(target, error = nil)
       @target = target
       @error = error

@@ -18,14 +18,6 @@ module AresMUSH
             end
           end
         end
-        
-        Global.logger.debug "Clearing excessive page threads."
-        PageThread.all.each do |t|
-          max_messages = 500
-          if (t.page_messages.count > max_messages)
-            t.sorted_messages.first(t.page_messages.count - max_messages).each { |m| m.delete }
-          end
-        end
       end
     end
   end

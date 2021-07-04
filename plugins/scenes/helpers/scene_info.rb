@@ -74,7 +74,6 @@ module AresMUSH
       matched_rooms = Room.find_by_name_and_area location
       area = nil
       vistas = {}
-      details = {}
       
       if (matched_rooms.count == 1)
         room = matched_rooms.first
@@ -84,7 +83,6 @@ module AresMUSH
           description = "%xh#{room.name}%xn%R#{room.description}"
           area = room.area
           vistas = room.vistas
-          details = room.details
         end
       else
         description = location
@@ -98,7 +96,6 @@ module AresMUSH
         scene.room.update(description: description)
         scene.room.update(area: area)
         scene.room.update(vistas: vistas)
-        scene.room.update(details: details)
       end
       
       data = Scenes.build_location_web_data(scene).to_json
